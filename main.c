@@ -28,7 +28,7 @@ int main() {
     int client;
     for (client = 0; client < NUM_CLIENTS; client++) {
         char filename[20];
-        sprintf(filename, "client_%d.txt", client);
+        sprintf(filename, "input/sm_%d.txt", client);
 
         FILE* output_file = fopen(filename, "w");
         if (output_file == NULL) {

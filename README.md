@@ -1,7 +1,7 @@
 # Unix_Term-Project_CUDA
-parallel operation project with CUDA
+### parallel operation project with CUDA
 
-# EX) 16 * 16 data set 
+## EX) 16 * 16 data set 
 ```
 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 
 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 
@@ -22,18 +22,24 @@ parallel operation project with CUDA
 ```
 ----
 # makeDataSet.c
-input, output directory 생성 - sm_0.txt(input directory) => sm_0.out.txt(output directory)
-config.h ->   ROWS, COLS 세팅 된 값에 의해 MATRIX 생성
+>input, output directory 생성 - sm_0.txt(input directory) => sm_0.out.txt(output directory)
+>
+>config.h ->   ROWS, COLS 세팅 된 값에 의해 MATRIX 생성
 
 # main.c
-input_data.txt 읽어와서 matrix 세로로 8등분 후 sm_0.txt ~ sm_7.txt 분배, 저장
+>input_data.txt 읽어와서 matrix 세로로 8등분 후 sm_0.txt ~ sm_7.txt 분배, 저장
 
 # client.c
-Loop -> fork() 8회 호출
-각 자식 프로세스는 8개의 client(SM) 역할
+>Loop -> fork() 8회 호출
+>
+>각 자식 프로세스는 8개의 client(SM) 역할
+>
+>fork된 자식 프로세스는 실제로는 CPU스케줄러에 의해 실행되지만 CUDA를 이용해 병렬 처리 한다고 가정
+>
+>8개의 SM은 파일 읽어와서 1씩 더하고 다시 output/sm_i.out.txt 에 저장
+>
 
-fork된 자식 프로세스는 실제로는 CPU스케줄러에 의해 실행되지만 CUDA 병렬 처리 한다고 가정
-8개의 SM은 파일 읽어와서 1씩 더하고 다시 output/sm_i.out.txt 에 저장
+
 ```
 pid_t pids[NUM_CLIENTS];
 int i;

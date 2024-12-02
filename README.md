@@ -1,10 +1,7 @@
 # Unix_Term-Project_CUDA
-parallel operation project with CUDA
+### parallel operation project with CUDA
 
-makeDataSet.c 
-input_data.txt 파일 생성
-
-# EX) 16 * 16 data set 
+## EX) 16 * 16 data set 
 ```
 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 
 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 
@@ -23,3 +20,64 @@ input_data.txt 파일 생성
 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239 
 240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255 
 ```
+----
+# makeDataSet.c
+>input, output directory 생성 : **sm_0.txt**(input directory) => **sm_0.out.txt**(output directory)
+>
+>
+>
+>config.h에 세팅 된 ROWS, COLS 값에 의해 MATRIX 생성
+
+# main.c
+>input_data.txt 읽어와서 matrix 세로로 8등분 후 sm_0.txt ~ sm_7.txt 분배, 저장
+
+# client.c
+>Loop -> fork() 8회 호출
+>
+>각 자식 프로세스는 **8개의 client(SM)** 역할
+> 
+> 
+>fork된 자식 프로세스는 실제로는 CPU스케줄러에 의해 순서가 정해진 채 실행되지만
+>
+>**프로젝트 상에는 CUDA를 이용해 병렬 처리 한다고 가정**
+>
+>연산 과정은 그냥 입력 data set의 정수에 1씩 더한다고 가정
+> 
+>각 SM은 자신에게 할당된 파일 하나를 input/에서 읽어와서 1씩 더하고 다시 output/sm_i.out.txt 에 저장
+>
+
+
+```
+pid_t pids[NUM_CLIENTS];
+int i;
+
+for(i=0; i<NUM_CLIENTS; i++){
+        pids[i] = fork();
+        if(pids[i] < 0){
+                perror("fork failed");
+                exit(1);
+        }else if(pids[i] == 0){
+                // client i (sm i)
+                // 각 자식 프로세스들은 스케쥴러에 의해 실행되지만
+                // 동시에 병렬 처리된다고 가정
+                
+                // sm_i.txt 파일 읽어옴
+
+                // output_file = "output/sm_i.out.txt" 
+                for (row = 0; row < ROWS / NUM_CLIENTS; row++) {
+                        for (col = 0; col < COLS; col++) {
+                                fprintf(output_file, "%d ", matrix[row][col] + 1);
+                        }
+                }
+                exit(0);
+        }
+}
+
+for(i=0; i<NUM_CLIENTS; i++){
+        wait(NULL);
+}
+
+printf("all clients process have finished\n");
+
+```
+

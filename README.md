@@ -50,7 +50,6 @@
 ```
 pid_t pids[NUM_CLIENTS];
 int i;
-
 for(i=0; i<NUM_CLIENTS; i++){
         pids[i] = fork();
         if(pids[i] < 0){
@@ -60,24 +59,12 @@ for(i=0; i<NUM_CLIENTS; i++){
                 // client i (sm i)
                 // 각 자식 프로세스들은 스케쥴러에 의해 실행되지만
                 // 동시에 병렬 처리된다고 가정
-                
                 // sm_i.txt 파일 읽어옴
-
-                // output_file = "output/sm_i.out.txt" 
-                for (row = 0; row < ROWS / NUM_CLIENTS; row++) {
-                        for (col = 0; col < COLS; col++) {
-                                fprintf(output_file, "%d ", matrix[row][col] + 1);
-                        }
-                }
-                exit(0);
+                // output_file = "output/sm_i.out.txt" 에 1씩 더해서 저장
         }
 }
 
-for(i=0; i<NUM_CLIENTS; i++){
-        wait(NULL);
-}
-
-printf("all clients process have finished\n");
-
 ```
+
+# server.c
 

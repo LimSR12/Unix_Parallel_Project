@@ -22,9 +22,11 @@
 ```
 ----
 # makeDataSet.c
->input, output directory 생성 - sm_0.txt(input directory) => sm_0.out.txt(output directory)
+>input, output directory 생성 : **sm_0.txt**(input directory) => **sm_0.out.txt**(output directory)
 >
->config.h ->   ROWS, COLS 세팅 된 값에 의해 MATRIX 생성
+>
+>
+>config.h에 세팅 된 ROWS, COLS 값에 의해 MATRIX 생성
 
 # main.c
 >input_data.txt 읽어와서 matrix 세로로 8등분 후 sm_0.txt ~ sm_7.txt 분배, 저장
@@ -32,11 +34,16 @@
 # client.c
 >Loop -> fork() 8회 호출
 >
->각 자식 프로세스는 8개의 client(SM) 역할
+>각 자식 프로세스는 **8개의 client(SM)** 역할
+> 
+> 
+>fork된 자식 프로세스는 실제로는 CPU스케줄러에 의해 순서가 정해진 채 실행되지만
 >
->fork된 자식 프로세스는 실제로는 CPU스케줄러에 의해 실행되지만 CUDA를 이용해 병렬 처리 한다고 가정
+>**프로젝트 상에는 CUDA를 이용해 병렬 처리 한다고 가정**
 >
->8개의 SM은 파일 읽어와서 1씩 더하고 다시 output/sm_i.out.txt 에 저장
+>연산 과정은 그냥 입력 data set의 정수에 1씩 더한다고 가정
+> 
+>각 SM은 자신에게 할당된 파일 하나를 input/에서 읽어와서 1씩 더하고 다시 output/sm_i.out.txt 에 저장
 >
 
 

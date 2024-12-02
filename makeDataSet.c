@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "config.h"
 #include <unistd.h>
 #include <sys/stat.h>
+
+#include "config.h"
 //#include <cuda_runtime_api.h>
 
 //#define ROWS 128
@@ -37,7 +38,6 @@ int main() {
 	int i, j;
 	for (i = 0; i < ROWS; i++) {
         	for (j = 0; j < COLS; j++) {
-            		int value = rand() % 100; // 임의의 0-99 값 생성
 			fprintf(file, "%d ", i * ROWS + j);
         	}
         	fprintf(file, "\n"); // 행마다 줄바꿈

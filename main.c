@@ -25,7 +25,7 @@ int main() {
 
     fclose(input_file);
 
-    int cols_per_client = COLS / NUM_CLIENTS;
+    int cols_per_client = COLS / OFFSET_4;
 
     /* 8개의 클라이언트 파일 생성, 분배 후 저장 */
     int client;
@@ -56,5 +56,6 @@ int main() {
 
     return 0;
 }
+
 
 

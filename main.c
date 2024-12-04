@@ -25,6 +25,8 @@ int main() {
 
     fclose(input_file);
 
+    int cols_per_client = COLS / NUM_CLIENTS;
+
     /* 8개의 클라이언트 파일 생성, 분배 후 저장 */
     int client;
     for (client = 0; client < NUM_CLIENTS; client++) {
@@ -39,12 +41,9 @@ int main() {
 
 	 
         for (i = 0; i < ROWS; i++) {
-            for (j = client * 2; j < client * 2 + 2; j++) {
-                //fprintf(output_file, "%d ", matrix[i][j]);
+            for (j = client * cols_per_client; j < (client + 1) * cols_per_client; j++) {
             	fwrite(&matrix[i][j], sizeof(int), 1, output_file);
-		//printf("%d", matrix[i][j]);
 	    }
-            //fprintf(output_file, "\n");
         }
 
         fclose(output_file);

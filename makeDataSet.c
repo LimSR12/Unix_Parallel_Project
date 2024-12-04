@@ -11,7 +11,7 @@
 
 int main() {
     FILE *file;
-    file = fopen("input_data.txt", "w");
+    file = fopen("bin/data.bin", "w");
 
     if(access("input", F_OK) == -1){
 	if(mkdir("input", 0777) == -1){
@@ -38,12 +38,14 @@ int main() {
 	int i, j;
 	for (i = 0; i < ROWS; i++) {
         	for (j = 0; j < COLS; j++) {
-			fprintf(file, "%d ", i * ROWS + j);
-        	}
-        	fprintf(file, "\n"); // 행마다 줄바꿈
+			//fprintf(file, "%d ", i * ROWS + j);
+        		int value = i * ROWS + j;	
+			fwrite(&value, sizeof(int), 1, file);
+		}
+        	//fprintf(file, "\n"); // 행마다 줄바꿈
     	}
 
 	fclose(file);
-    	printf("데이터 파일이 생성되었습니다: input_data.txt\n");
+    	printf("데이터 파일이 생성되었습니다: bin/data.bin\n");
     	return 0;
 }

@@ -1,21 +1,35 @@
 # Unix_Term-Project_CUDA
 ### parallel operation project with CUDA
 ```
-project/
-├── bin/
-│   ├── data.bin
-│   ├── client/
-│   │   ├── sm0.bin
-│   │   ├── sm1.bin
-│   │   └── partition/
-│   │       ├── sm0.bin
-│   │       ├── sm1.bin
-│   │       └── ...
-│   ├── server/
-├── init.c          // setup.c
-├── main.c          // partition.c
-├── client.c        // process_client.c
-├── config.h
+.
+├── README.md
+├── bin                      // binary files
+│   ├── client
+│   │   ├── collected        // by client-client comm. 
+│   │   │   ├── sm0.bin
+│   │   │   ├── sm1.bin
+│   │   │   ├── sm2.bin
+│   │   │   ├── sm3.bin
+│   │   │   ├── sm4.bin
+│   │   │   ├── sm5.bin
+│   │   │   ├── sm6.bin
+│   │   │   └── sm7.bin
+│   │   └── partition        // 8*8 partitioning | 4*4 partitioning
+│   │       ├── sm0.bin
+│   │       ├── sm1.bin
+│   │       ├── sm2.bin
+│   │       ├── sm3.bin
+│   │       ├── sm4.bin
+│   │       ├── sm5.bin
+│   │       ├── sm6.bin
+│   │       └── sm7.bin
+│   ├── data.bin              // 128*128 matrix
+│   └── server                //
+│
+├── client.c      // client-client comm & client-server comm
+├── config.h      // header file 
+├── init.c        // setup & directory setting
+└── main.c        // displit data set
 
 ```
 
@@ -76,25 +90,6 @@ for(i=0; i<NUM_CLIENTS; i++){
 
 
 # Idea
-전체 128*128 데이터 존재
-
-이걸 8*8 grid 로 나눠서 각 클라이언트가 사용하도록 할거임 -> file_partition.c
-
-서버는 fork() 후 대기
-
-클라이언트는 fork() 8번, 각 프로세스마다 자신이 읽어와야 할 파일 읽어옴
-
-클라이언트끼리 통신, 순차적으로 데이터 모아줘야 함
-ex) 16*16 배열을 8*8 파티셔닝
-
-16 / 8 = 2
-각 클라이언트가 가지고 있는 데이터에 대해 
-앞에서부터 2개씩 2번 (2*2) -> sm_0
-그다음     2개씩 2번 (2*2) -> sm_1
-.
-.
-.
-마지막      2개씩 2번 (2*2) -> sm_7
 
 
 

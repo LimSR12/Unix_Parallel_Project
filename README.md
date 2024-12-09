@@ -1,5 +1,23 @@
 # Unix_Term-Project_CUDA
 ### parallel operation project with CUDA
+```
+project/
+├── bin/
+│   ├── data.bin
+│   ├── client/
+│   │   ├── sm0.bin
+│   │   ├── sm1.bin
+│   │   └── partition/
+│   │       ├── sm0.bin
+│   │       ├── sm1.bin
+│   │       └── ...
+│   ├── server/
+├── init.c          // setup.c
+├── main.c          // partition.c
+├── client.c        // process_client.c
+├── config.h
+
+```
 
 makeDataSet.c -> main.c
 ----

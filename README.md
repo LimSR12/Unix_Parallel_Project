@@ -1,4 +1,4 @@
-# Unix_Term-Project_CUDA
+# Unix_Project_CUDA
 ### parallel operation project with CUDA
 ```
 .
